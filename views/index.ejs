@@ -13,6 +13,15 @@
     <input type="text" name="description" placeholder="Description">
     <button type="submit" name="submit">UPLOAD</button>
   </form>
+
+  <ul>
+    <% images.forEach(function(image) { %>
+      <li>
+        <img src="/<%= image.file_name %>" alt="<%= image.description %>">
+        <p><%= image.description %></p>
+      </li>
+    <% }) %>
+  </ul>
   
 </body>
 </html>

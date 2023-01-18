@@ -25,12 +25,16 @@ app.get("/", async (req, res) => {
 
 
 
-app.post('/saveImage', upload.single('image'), (req, res) => {
+app.post('/saveImage', upload.single('image'), async (req, res) => {
   const imagePath = req.file.path
   const description = req.body.description
 
+  const addImages = await database.addImage(imagePath, description)
+  console.log(addImages)
+  const images = await database.getImages()
+
   console.log(description, imagePath)
-  res.render('savedImage', {description, imagePath})
+  res.render("index", { images })
 })
 
 app.get('/images/:imageName', (req, res) => {
