@@ -17,8 +17,13 @@
   <ul>
     <% images.forEach(function(image) { %>
       <li>
-        <img src="/<%= image.file_name %>" alt="<%= image.description %>">
+        <img src="<%= image.url %>" alt="<%= image.description %>">
         <p><%= image.description %></p>
+        <br>
+        <form id="<%= image.id %>" action="/deleteImage/<%= image.id %>" method="post">
+          <input type="hidden" name="imageUrl" value="<%= image.url %>">
+          <button type="submit">DELETE</button>
+        </form>
       </li>
     <% }) %>
   </ul>

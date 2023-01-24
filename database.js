@@ -9,17 +9,24 @@ const pool = mysql
   })
   .promise()
 
-async function getImages() {
-  let query = `
-  SELECT * 
-  FROM images
-  ORDER BY created DESC
-  `
 
-  const [rows] = await pool.query(query);
-  return rows
-}
-exports.getImages = getImages
+
+  async function getImages() {
+    let query = `
+    SELECT * 
+    FROM images
+    ORDER BY created DESC
+    `
+  
+    const [rows] = await pool.query(query);
+    for (const image of rows) {
+      image.id = image.id
+    }
+    return rows
+  }
+  exports.getImages = getImages
+
+
 
 async function getImage(id) {
   let query = `
@@ -34,6 +41,8 @@ async function getImage(id) {
 }
 exports.getImage = getImage
 
+
+
 async function addImage(filePath, description) {
   let query = `
   INSERT INTO images (file_name, description)
@@ -46,3 +55,15 @@ async function addImage(filePath, description) {
   return await getImage(id)
 }
 exports.addImage = addImage
+
+
+
+async function deleteImage(id) {
+  let query = `
+  DELETE FROM images
+  WHERE id = ?
+  `
+
+  const [result] = await pool.query(query, [id]);
+}
+exports.deleteImage = deleteImage
